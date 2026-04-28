@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  padding: 16px;
+  background: #f7f7f7;
+}
+input { padding: 6px; width: 100%; max-width: 400px; }
+button { padding: 6px 12px; }
