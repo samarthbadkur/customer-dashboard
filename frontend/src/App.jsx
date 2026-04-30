@@ -57,58 +57,96 @@ export default function App() {
   }
 
   return (
-    <div style={{ maxWidth: 800, margin: '24px auto', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Customer Dashboard</h1>
+    <main className="app-shell">
+      <section className="app-header">
+        <h1>Customer Dashboard</h1>
+        <p>Manage customer records quickly and keep your list always up to date.</p>
+      </section>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-        <div style={{ marginBottom: 8 }}>
-          <label style={{ display: 'block' }}>Name</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div style={{ marginBottom: 8 }}>
-          <label style={{ display: 'block' }}>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div style={{ marginBottom: 8 }}>
-          <label style={{ display: 'block' }}>Phone Number</label>
-          <input value={phone} onChange={(e) => setPhone(e.target.value)} required />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      <section className="card">
+        <h2>Add Customer</h2>
+        <form onSubmit={handleSubmit} className="customer-form">
+          <div className="field-grid">
+            <div className="field">
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter full name"
+                required
+              />
+            </div>
 
-      <h2>Customers</h2>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <table border="1" cellPadding="8" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.length === 0 ? (
-              <tr>
-                <td colSpan="4">No customers</td>
-              </tr>
-            ) : (
-              customers.map((c) => (
-                <tr key={c.id}>
-                  <td>{c.name}</td>
-                  <td>{c.email}</td>
-                  <td>{c.phone}</td>
-                  <td>
-                    <button onClick={() => handleDelete(c.id)}>Delete</button>
-                  </td>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+                required
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="e.g. +91 98765 43210"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary">Add Customer</button>
+          </div>
+        </form>
+      </section>
+
+      <section className="card">
+        <div className="list-header">
+          <h2>Customers</h2>
+          <span className="count-pill">{customers.length}</span>
+        </div>
+
+        {loading ? (
+          <div className="state-message">Loading customers...</div>
+        ) : customers.length === 0 ? (
+          <div className="state-message">No customers added yet.</div>
+        ) : (
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Action</th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      )}
-    </div>
+              </thead>
+              <tbody>
+                {customers.map((c) => (
+                  <tr key={c.id}>
+                    <td>{c.name}</td>
+                    <td>{c.email}</td>
+                    <td>{c.phone}</td>
+                    <td>
+                      <button className="btn btn-danger" onClick={() => handleDelete(c.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+    </main>
   )
 }
